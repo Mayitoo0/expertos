@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="page.js"></script>
+    <title>DEBATES</title>
+</head>
+
+<body>
+    <div class="imageness">
+        <div class="imgderecha">
+            <img src="img/derecha3.png" alt="">
+            <img src="img/derecha2.png" alt="">
+            <img src="img/derecha1.png" alt="">
+        </div>
+        <div class="imgizquierda">
+            <img src="img/izquierda3.png" alt="">
+            <img src="img/izquierda2.png" alt="">
+            <img src="img/izquierda1.png" alt="">
+        </div>
+    </div>
+    <div class="container">
+
+        <H1 id="titulo">Dialogo entre expertos</H1>
+        <div class="expertos">
+            <div class="ufologo">
+                <h1>Ufologo</h1>
+            </div>
+            <div class="agnostico">
+                <h1>Agnostico</h1>
+            </div>
+        </div>
+        <div id="chat" class="chat">
+
+        </div>
+        <div class="botones">
+
+            <button id="boton1" class="boton1">Respuesta ufologo</button>
+
+            <button id="boton2" class="boton2">Respuesta agnostico</button>
+
+
+            <button id="boton3" class="boton3">Limpiar chat</button>
+
+
+            <button id="boton4" class="boton4">Exportar PDF</button>
+
+        </div>
+    </div>
+    <script>
+
+        const agregar = (respuesta, rol) => {
+            chat.innerHTML += `
+            <div class="mensaje">
+                <div class="rol">${rol}</div>
+                <div class="texto">${respuesta}</div>`
+        }
+
+
+        const ia1 = async () => {
+            const response = await fetch('/ia1');
+            const data = await response.json();
+            console.log(data);
+            agregar(data.respuesta, "ufologo");
+            agregarbasededatos(data.respuesta, "ufologo");
+        }
+
+
+        let boton = document.getElementById("boton1");
+        boton.addEventListener("click", function () {
+            ia1();
+        });
+
+        const ia2 = async () => {
+            const response = await fetch('/ia2');
+            const data = await response.json();
+            console.log(data);
+            agregar(data.respuesta, "agnostico");
+            agregarbasededatos(data.respuesta, "agnostico");
+        }
+
+
+        let chat = document.getElementById("chat");
+        let boton2 = document.getElementById("boton2");
+        boton2.addEventListener("click", function () {
+            ia2();
+        });
+
+        const agregarbasededatos = async (texto, rol) => {
+            const response = await fetch('/agregarbasededatos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ texto, rol })
+            });
+            const data = await response.json();
+            console.log(data);
+
+        }
+        let boton3 = document.getElementById("boton3");
+        boton3.addEventListener("click", function () {
+            limpiar();
+        });
+        const limpiar = async() => {
+            chat.innerHTML = "";
+            const response = await fetch('/limpiarhistorial', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const data = await response.json();
+            console.log(data);
+        }
+        
+        
+        const traerinfo = async () => {
+            const response = await fetch('/traerinfo');
+            const data = await response.json();
+            console.log(data);
+           data.forEach(element => {
+                agregar(element.texto, element.rol);
+            });
+        }
+        document.addEventListener("DOMContentLoaded", ()=> {
+            traerinfo();
+        });
+
+        let boton4 = document.getElementById("boton4");
+        boton4.addEventListener("click", function () {
+            exportarpdf();
+        });
+        const exportarpdf = async () => {
+            const response = await fetch('/traerinfo');
+            const data = await response.json();
+            console.log(data);
+            const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+
+                doc.setFont("Helvetica bold")
+                doc.setFontSize(16)
+
+                let y = 10;
+                data.forEach(entry => {
+
+                    const texto = ` ${entry.rol}:\n${entry.texto} `;
+                    const lineas = doc.splitTextToSize(texto, 180);
+
+                    if (y + (lineas.length * 10) > 300) {
+                        doc.addPage();
+                        y = 10;
+                    }
+
+                    doc.text(lineas, 10, y);
+                    y += lineas.length * 8;
+                });
+
+                doc.save("historial.pdf");
+        }
+      
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</body>
+
+</html>

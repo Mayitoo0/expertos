@@ -1,0 +1,161 @@
+@font-face {
+    font-family: 'SpaceAge';
+    src: url('../fonts/TechnoLogic.ttf') format('truetype');
+  }
+
+@font-face {
+    font-family: 'GalaxyFont';
+    src: url('../fonts/Technopath.otf') format('truetype');
+  }
+button:active {
+  cursor: progress; 
+}
+
+body {
+    background-image: url('../img/fondo.gif');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+    margin: 0;
+    cursor: url('../img/mano.png'), auto;
+
+  }
+
+.imageness{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    position: absolute;
+    margin-top: 4%;
+    img{
+        width: 25%;
+    }
+    img:hover {
+    filter: brightness(1.8);
+    transition: 0.2s ease;
+}
+}
+
+.imgderecha{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    z-index: 10;
+    width: 48%;
+
+}
+.imgizquierda{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    z-index: 20;
+    width: 40%;
+
+}
+
+  #titulo{
+    font-family: 'spaceAge', sans-serif;
+    font-size: 100px;
+    margin-top: 3%;
+    margin-bottom: 0;
+  }
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    width: 50%;
+    height: 100%;
+    margin: auto;
+    font-family: 'galaxyFont', sans-serif;
+    background-color: #410445b3;
+    color: aliceblue;
+}
+.expertos{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 70%;
+    font-size: 15px;
+    margin: 2%;
+}
+.ufologo, .agnostico{
+    border: 1px solid rgb(70, 29, 88);
+    border-radius: 5px;
+    padding-left: 3%;
+    padding-right: 3%;
+    background-color: #824186b3;
+    
+}
+
+
+.ufologo1 {
+  color: #ff5252;
+  border-left: 3px solid #ff5252;
+  padding-left: 10px;
+  margin: 10px 0;
+}
+.agnostico2 {
+  color: #4285f4;
+  border-left: 3px solid #4285f4;
+  padding-left: 10px;
+  margin: 10px 0;
+}
+
+
+.chat{
+    border: 1px solid rgb(177, 177, 177);
+    border-radius: 5px;
+    height: 500px;
+    width: 70%;
+    background-color: #FFF0DC;
+    
+}
+.botones{
+    display: flex;
+    flex-direction: row;
+    
+    justify-content: space-between;
+    width: 95%;
+    margin: 5%;
+    button:hover {
+    box-shadow: 0 0 15px 5px rgb(255, 208, 56);
+    transform: scale(1.05);
+    transition: 0.1s ease;
+    cursor: url('../img/tomar.png'), auto;
+}   
+}
+.boton1{
+    background-color: #cde26d;
+    border-radius: 5px;
+    font-size: 17px;
+    font-family: 'galaxyFont', sans-serif;
+}
+.boton2{
+    background-color: #d4327e;
+    border-radius: 5px;
+    font-size: 17px;
+    font-family: 'galaxyFont', sans-serif;
+}
+.boton3{
+    background-color: rgb(121, 121, 121);
+    border-radius: 5px;
+    font-size: 17px;
+    font-family: 'galaxyFont', sans-serif;
+}
+.boton4{
+    background-color: #911b8b;
+    border-radius: 5px;
+    font-size: 17px;
+    font-family: 'galaxyFont', sans-serif;
+}
+.mensaje{
+  color: black;
+  
+}
+.chat{
+  overflow:auto;
+}
